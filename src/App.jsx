@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Game from "./Game";
 import GlobalStyles from "./GlobalStyles";
-import { GameProvider } from "./GameContext";
+import { GameProvider } from "./context/GameContext";
 
 function App() {
   return (

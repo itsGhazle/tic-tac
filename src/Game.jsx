@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { useContext } from "react";
-import { GameContext } from "./GameContext";
+import { GameContext } from "./context/GameContext";
 import styled from "styled-components";
 
 const Container = styled.div`
