@@ -1,36 +1,43 @@
 import React from "react";
 import Square from "../src/components/Square";
-import { useStore } from "./store/store";
+import {
+  calculateStatus,
+  calculateTurns,
+  calculateWinner,
+} from "./utils/utils";
+import { BoardProps } from "./lib/defination";
 
-function Board() {
-  const squares = useStore((state) => state.squares);
-  const setSquare = useStore((state) => state.setSquare);
-  const xIsNext = useStore((state) => state.xIsNext);
-  const setXIsNext = useStore((state) => state.setXIsNext);
+function Board({ xIsNext, squares, onPlay }: BoardProps) {
   const player = xIsNext ? "X" : "O";
+  const winner = calculateWinner(squares);
+  const turns = calculateTurns(squares);
+  const status = calculateStatus(turns, winner, player);
 
-  function handleClick(i) {
+  function handleClick(i: number) {
     if (squares[i]) return;
     const nextSquares = squares.slice();
     nextSquares[i] = player;
-    setSquare(nextSquares);
-    setXIsNext(!xIsNext);
+    onPlay(nextSquares);
   }
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gridTemplateRows: "repeat(3, 1fr)",
-        width: "calc(3 * 2.5rem)",
-        height: "calc(3 * 2.5rem)",
-        border: "1px solid #999",
-      }}
-    >
-      {squares.map((x, i) => {
-        return <Square value={x} key={i} onClick={() => handleClick(i)} />;
-      })}
-    </div>
+    <>
+      <div>{status}</div>
+      <div>{winner}</div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateRows: "repeat(3, 1fr)",
+          width: "calc(3 * 2.5rem)",
+          height: "calc(3 * 2.5rem)",
+          border: "1px solid #999",
+        }}
+      >
+        {squares.map((x, i) => {
+          return <Square value={x} key={i} onClick={() => handleClick(i)} />;
+        })}
+      </div>
+    </>
   );
 }
 

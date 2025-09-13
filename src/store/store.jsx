@@ -2,22 +2,22 @@ import { create } from "zustand";
 import { combine } from "zustand/middleware";
 
 export const useStore = create(
-  combine({ squares: Array(9).fill(null), xIsNext: true }, (set) => {
+  combine({ history: [Array(9).fill(null)], currentMove: 0 }, (set) => {
     return {
-      setSquare: (nextSquare) => {
+      setHistory: (nextHistory) => {
         set((state) => ({
-          squares:
-            typeof nextSquare === "function"
-              ? nextSquare(state.squares)
-              : nextSquare,
+          history:
+            typeof nextHistory === "function"
+              ? nextHistory(state.history)
+              : nextHistory,
         }));
       },
-      setXIsNext: (nextXIsNext) => {
+      setCurrentMove: (nextCurrentMove) => {
         set((state) => ({
-          xIsNext:
-            typeof nextXIsNext === "function"
-              ? nextXIsNext(state.xIsNext)
-              : nextXIsNext,
+          currentMove:
+            typeof nextCurrentMove === "function"
+              ? nextCurrentMove(state.currentMove)
+              : nextCurrentMove,
         }));
       },
     };
